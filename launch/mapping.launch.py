@@ -5,6 +5,8 @@ from launch.actions import IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch_ros.actions import Node
 
+import math
+
 def generate_launch_description():
     # --- CONFIGURATION ---
     # 1. Package Names
@@ -23,6 +25,15 @@ def generate_launch_description():
     # Use standard SLAM Toolbox params (or your custom one)
     slam_params_file = os.path.join(pkg_path, 'config', 'mapper_params_online_async.yaml')
 
+
+    # TILT CALCULATION (60 Degrees)
+    # angle_deg = 60.0 
+    # angle_rad = angle_deg * (math.pi / 180.0)
+    # z_rotation_angle = 180.0
+    # z_rotation_rad = z_rotation_angle * (math.pi / 180.0)
+    # lidar_tf_args = ['0.1', '0', '0.5', '0', str(angle_rad), str(z_rotation_rad), 'base_link', 'livox_frame']
+
+
     # --- NODES ---
 
     # 1. STATIC TRANSFORM (Base -> Lidar)
@@ -31,7 +42,7 @@ def generate_launch_description():
         package='tf2_ros',
         executable='static_transform_publisher',
         name='base_to_lidar_publisher',
-        arguments=['0.1', '0.0', '0.4', '3.14159', '-1.047', '0.0', 'base_link', 'livox_frame']
+        arguments=['0.1','0','0.4', '3.14159', '-1.047', '0.0', 'camera_init', 'livox_frame']
     )
 
     tf_odom_bridge = Node(
@@ -45,7 +56,7 @@ def generate_launch_description():
         package='tf2_ros',
         executable='static_transform_publisher',
         name='body_to_base_link',
-        arguments=['-0.1','0','-0.4','0','0','0', 'body', 'base_link']
+        arguments=['0','0','0','0','0','0', 'body', 'base_link']
     )
 
     # 2. FAST-LIO (Odometry Source)
@@ -59,6 +70,25 @@ def generate_launch_description():
         }.items()
     )
 
+
+    # 4. ROTATE POINT CLOUD TO base_frame
+    rotate_pc_node = Node(
+        package='guide_robot_localization',
+        executable='point_cloud_transformer',
+        name='pointcloud_rotator',
+        remappings=[
+            ('/input_point_cloud', '/Laser_map'),
+            ('/output_point_cloud', '/cloud_rotated')
+        ],
+        parameters=[{
+            'input_topic': '/Laser_map',
+            'output_topic': '/cloud_rotated',
+            'target_frame': 'livox_frame',
+            'timeout': 1.0
+        }]
+    )
+
+
     # 3. POINTCLOUD TO LASERSCAN (The Slicer)
     # Converts 3D Livox data to 2D /scan
     pc2scan_node = Node(
@@ -66,11 +96,11 @@ def generate_launch_description():
         executable='pointcloud_to_laserscan_node',
         name='pointcloud_to_laserscan',
         remappings=[
-            ('cloud_in', '/cloud_registered'), #Listen to FAST-LIO's registered point cloud output
+            ('cloud_in', '/cloud_rotated'), #Listen to FAST-LIO's registered point cloud output
             ('scan', '/scan')
         ],
         parameters=[{
-            'target_frame': 'base_link', 
+            'target_frame': 'camera_init',
             'transform_tolerance': 0.1,
             'min_height': 0.1,           # Ignore floor (0.0 to 0.1)
             'max_height': 1.0,           # See walls/furniture
@@ -112,6 +142,7 @@ def generate_launch_description():
         tf_odom_bridge,
         tf_body_bridge,
         fast_lio_node,
+        rotate_pc_node, 
         pc2scan_node,
         slam_node,
         rviz_node

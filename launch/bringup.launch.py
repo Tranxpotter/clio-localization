@@ -22,11 +22,17 @@ def generate_launch_description():
     
 
     # TILT CALCULATION (60 Degrees)
-    angle_deg = 240.0 
+    angle_deg = 60.0 
     angle_rad = angle_deg * (math.pi / 180.0)
     z_rotation_angle = 180.0
     z_rotation_rad = z_rotation_angle * (math.pi / 180.0)
     lidar_tf_args = ['0.1', '0', '0.5', '0', str(angle_rad), str(z_rotation_rad), base_frame, lidar_frame]
+
+
+                # extrinsic_T: [ 0.1, 0.0, 0.4 ]
+            # extrinsic_R: [ -0.5, 0.0, 0.866025,
+            #                 0.0, -1.0, 0.0,
+            #                 0.866025, 0.0, 0.5]
     # --- NODES ---
 
     # 1. FAST-LIO

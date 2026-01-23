@@ -94,12 +94,22 @@ class PointCloudTransformer(Node):
             
             # Convert quaternion to rotation matrix
             rotation_matrix = self.quaternion_to_rotation_matrix(qx, qy, qz, qw)
-            
+            # rotation_matrix = R  # Use hardcoded rotation for testing
+            rotation_matrix = np.array([
+                [1.0, 0.0, 0.0],
+                [0.0, 1.0, 0.0],
+                [0.0, 0.0, 1.0]
+            ])  # Use hardcoded rotation for testing
+
             # Extract translation
             tx = transform.transform.translation.x
             ty = transform.transform.translation.y
             tz = transform.transform.translation.z
             
+            tx = 0.0  # Use hardcoded translation for testing
+            ty = 0.0
+            tz = 0.0
+
             for point in points_list:
                 # Apply rotation
                 point_vec = np.array([point[0], point[1], point[2]])

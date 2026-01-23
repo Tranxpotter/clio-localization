@@ -20,7 +20,25 @@ This package receives lidar point clouds (originating in the `camera_init` frame
     - On each update the buffer contents are concatenated into a single point cloud. Concatenation increases point density and fills gaps caused by sensor motion or occlusion.
 - TF-based transform
     - A tf2 buffer/listener is used to lookup the transform between `camera_init` and `robot_footprint` at the cloud timestamp.
-    - The package uses `tf2_sensor_msgs::doTransform` (or equivalent tf2 sensor_msgs helper) to transform the `sensor_msgs/PointCloud2` message into the target frame while preserving timestamps and cloud metadata.
+    - The package umap
+ Broadcaster: default_authority
+Average rate: 11.6
+Buffer length: 5.0
+Most recent transform: 1769153863.507956
+Oldest transform: 1769153858.507977
+base_link
+livox_frame
+ Broadcaster: default_authority
+Average rate: 10000.0
+Buffer length: 0.0
+Most recent transform: 0.0
+Oldest transform: 0.0
+ Broadcaster: default_authority
+Average rate: 10000.0
+Buffer length: 0.0
+Most recent transform: 0.0
+Oldest transform: 0.0
+Recorded at time: 1769153863.0930104ses `tf2_sensor_msgs::doTransform` (or equivalent tf2 sensor_msgs helper) to transform the `sensor_msgs/PointCloud2` message into the target frame while preserving timestamps and cloud metadata.
 - Filtering & cleanup
     - After transformation the cloud is filtered (e.g., passthrough on z) to map onto 2D plane.
     - The resultant cloud is published for localization or mapping nodes.
