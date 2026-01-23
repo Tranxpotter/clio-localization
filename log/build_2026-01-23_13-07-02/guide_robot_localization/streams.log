@@ -1,0 +1,71 @@
+[1.135s] Invoking command in '/home/iwintern/guide_robot_ws/src/guide_robot_localization': PYTHONPATH=/home/iwintern/guide_robot_ws/src/guide_robot_localization/build/guide_robot_localization/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base build/guide_robot_localization build --build-base /home/iwintern/guide_robot_ws/src/guide_robot_localization/build/guide_robot_localization/build install --record /home/iwintern/guide_robot_ws/src/guide_robot_localization/build/guide_robot_localization/install.log --single-version-externally-managed install_data
+[1.584s] running egg_info
+[1.584s] creating build/guide_robot_localization/guide_robot_localization.egg-info
+[1.585s] writing build/guide_robot_localization/guide_robot_localization.egg-info/PKG-INFO
+[1.585s] writing dependency_links to build/guide_robot_localization/guide_robot_localization.egg-info/dependency_links.txt
+[1.586s] writing entry points to build/guide_robot_localization/guide_robot_localization.egg-info/entry_points.txt
+[1.586s] writing requirements to build/guide_robot_localization/guide_robot_localization.egg-info/requires.txt
+[1.586s] writing top-level names to build/guide_robot_localization/guide_robot_localization.egg-info/top_level.txt
+[1.586s] writing manifest file 'build/guide_robot_localization/guide_robot_localization.egg-info/SOURCES.txt'
+[1.590s] reading manifest file 'build/guide_robot_localization/guide_robot_localization.egg-info/SOURCES.txt'
+[1.591s] writing manifest file 'build/guide_robot_localization/guide_robot_localization.egg-info/SOURCES.txt'
+[1.592s] running build
+[1.593s] running build_py
+[1.593s] creating /home/iwintern/guide_robot_ws/src/guide_robot_localization/build/guide_robot_localization/build
+[1.594s] creating /home/iwintern/guide_robot_ws/src/guide_robot_localization/build/guide_robot_localization/build/lib
+[1.594s] creating /home/iwintern/guide_robot_ws/src/guide_robot_localization/build/guide_robot_localization/build/lib/guide_robot_localization
+[1.594s] copying guide_robot_localization/tf_rotation_publisher.py -> /home/iwintern/guide_robot_ws/src/guide_robot_localization/build/guide_robot_localization/build/lib/guide_robot_localization
+[1.594s] copying guide_robot_localization/odometry_transformer.py -> /home/iwintern/guide_robot_ws/src/guide_robot_localization/build/guide_robot_localization/build/lib/guide_robot_localization
+[1.595s] copying guide_robot_localization/imu_to_basefootprint.py -> /home/iwintern/guide_robot_ws/src/guide_robot_localization/build/guide_robot_localization/build/lib/guide_robot_localization
+[1.595s] copying guide_robot_localization/corrected_body_frame_publisher.py -> /home/iwintern/guide_robot_ws/src/guide_robot_localization/build/guide_robot_localization/build/lib/guide_robot_localization
+[1.595s] copying guide_robot_localization/__init__.py -> /home/iwintern/guide_robot_ws/src/guide_robot_localization/build/guide_robot_localization/build/lib/guide_robot_localization
+[1.596s] copying guide_robot_localization/accumulator.py -> /home/iwintern/guide_robot_ws/src/guide_robot_localization/build/guide_robot_localization/build/lib/guide_robot_localization
+[1.596s] copying guide_robot_localization/point_cloud_transformer.py -> /home/iwintern/guide_robot_ws/src/guide_robot_localization/build/guide_robot_localization/build/lib/guide_robot_localization
+[1.597s] running install
+[1.597s] running install_lib
+[1.597s] creating /home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/lib/python3.10/site-packages/guide_robot_localization
+[1.597s] copying /home/iwintern/guide_robot_ws/src/guide_robot_localization/build/guide_robot_localization/build/lib/guide_robot_localization/tf_rotation_publisher.py -> /home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/lib/python3.10/site-packages/guide_robot_localization
+[1.598s] copying /home/iwintern/guide_robot_ws/src/guide_robot_localization/build/guide_robot_localization/build/lib/guide_robot_localization/odometry_transformer.py -> /home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/lib/python3.10/site-packages/guide_robot_localization
+[1.598s] copying /home/iwintern/guide_robot_ws/src/guide_robot_localization/build/guide_robot_localization/build/lib/guide_robot_localization/imu_to_basefootprint.py -> /home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/lib/python3.10/site-packages/guide_robot_localization
+[1.598s] copying /home/iwintern/guide_robot_ws/src/guide_robot_localization/build/guide_robot_localization/build/lib/guide_robot_localization/corrected_body_frame_publisher.py -> /home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/lib/python3.10/site-packages/guide_robot_localization
+[1.599s] copying /home/iwintern/guide_robot_ws/src/guide_robot_localization/build/guide_robot_localization/build/lib/guide_robot_localization/__init__.py -> /home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/lib/python3.10/site-packages/guide_robot_localization
+[1.599s] copying /home/iwintern/guide_robot_ws/src/guide_robot_localization/build/guide_robot_localization/build/lib/guide_robot_localization/accumulator.py -> /home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/lib/python3.10/site-packages/guide_robot_localization
+[1.599s] copying /home/iwintern/guide_robot_ws/src/guide_robot_localization/build/guide_robot_localization/build/lib/guide_robot_localization/point_cloud_transformer.py -> /home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/lib/python3.10/site-packages/guide_robot_localization
+[1.599s] byte-compiling /home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/lib/python3.10/site-packages/guide_robot_localization/tf_rotation_publisher.py to tf_rotation_publisher.cpython-310.pyc
+[1.599s] byte-compiling /home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/lib/python3.10/site-packages/guide_robot_localization/odometry_transformer.py to odometry_transformer.cpython-310.pyc
+[1.600s] byte-compiling /home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/lib/python3.10/site-packages/guide_robot_localization/imu_to_basefootprint.py to imu_to_basefootprint.cpython-310.pyc
+[1.601s] byte-compiling /home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/lib/python3.10/site-packages/guide_robot_localization/corrected_body_frame_publisher.py to corrected_body_frame_publisher.cpython-310.pyc
+[1.602s] byte-compiling /home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/lib/python3.10/site-packages/guide_robot_localization/__init__.py to __init__.cpython-310.pyc
+[1.603s] byte-compiling /home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/lib/python3.10/site-packages/guide_robot_localization/accumulator.py to accumulator.cpython-310.pyc
+[1.603s] byte-compiling /home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/lib/python3.10/site-packages/guide_robot_localization/point_cloud_transformer.py to point_cloud_transformer.cpython-310.pyc
+[1.605s] running install_data
+[1.605s] creating /home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/share/ament_index
+[1.605s] creating /home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/share/ament_index/resource_index
+[1.606s] creating /home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/share/ament_index/resource_index/packages
+[1.606s] copying resource/guide_robot_localization -> /home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/share/ament_index/resource_index/packages
+[1.606s] copying package.xml -> /home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/share/guide_robot_localization
+[1.606s] creating /home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/share/guide_robot_localization/launch
+[1.607s] copying launch/mapping.launch.py -> /home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/share/guide_robot_localization/launch
+[1.607s] copying launch/bringup.launch.py -> /home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/share/guide_robot_localization/launch
+[1.608s] copying launch/rotation.launch.py -> /home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/share/guide_robot_localization/launch
+[1.608s] copying launch/debug_odometry.launch.py -> /home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/share/guide_robot_localization/launch
+[1.608s] creating /home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/share/guide_robot_localization/maps
+[1.609s] copying maps/map.pgm -> /home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/share/guide_robot_localization/maps
+[1.609s] copying maps/map.yaml -> /home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/share/guide_robot_localization/maps
+[1.609s] copying maps/map_edited.yaml -> /home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/share/guide_robot_localization/maps
+[1.609s] copying maps/map_edited.pgm -> /home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/share/guide_robot_localization/maps
+[1.609s] creating /home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/share/guide_robot_localization/config
+[1.610s] copying config/nav2_params.yaml -> /home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/share/guide_robot_localization/config
+[1.610s] copying config/mapper_params_online_async.yaml -> /home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/share/guide_robot_localization/config
+[1.610s] creating /home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/share/guide_robot_localization/rviz
+[1.610s] copying rviz/config.rviz -> /home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/share/guide_robot_localization/rviz
+[1.611s] running install_egg_info
+[1.611s] Copying build/guide_robot_localization/guide_robot_localization.egg-info to /home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/lib/python3.10/site-packages/guide_robot_localization-0.0.0-py3.10.egg-info
+[1.613s] running install_scripts
+[1.650s] Installing accumulator script to /home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/lib/guide_robot_localization
+[1.650s] Installing corrected_body_frame_publisher script to /home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/lib/guide_robot_localization
+[1.651s] Installing imu_to_basefootprint script to /home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/lib/guide_robot_localization
+[1.651s] Installing odometry_transformer script to /home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/lib/guide_robot_localization
+[1.651s] Installing point_cloud_transformer script to /home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/lib/guide_robot_localization
+[1.652s] writing list of installed files to '/home/iwintern/guide_robot_ws/src/guide_robot_localization/build/guide_robot_localization/install.log'
+[1.706s] Invoked command in '/home/iwintern/guide_robot_ws/src/guide_robot_localization' returned '0': PYTHONPATH=/home/iwintern/guide_robot_ws/src/guide_robot_localization/build/guide_robot_localization/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base build/guide_robot_localization build --build-base /home/iwintern/guide_robot_ws/src/guide_robot_localization/build/guide_robot_localization/build install --record /home/iwintern/guide_robot_ws/src/guide_robot_localization/build/guide_robot_localization/install.log --single-version-externally-managed install_data
