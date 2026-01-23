@@ -51,3 +51,6 @@ Add these to package.xml and CMakeLists.txt as appropriate.
 
 ## License
 Apache 2.0
+
+## Mapping Usage
+saving the map: ros2 run nav2_map_server map_saver_cli -f ~/guide_robot_ws/maps/my_map

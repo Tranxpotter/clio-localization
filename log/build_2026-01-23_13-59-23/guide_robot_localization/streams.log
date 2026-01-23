@@ -1,0 +1,27 @@
+[1.126s] Invoking command in '/home/iwintern/guide_robot_ws/src/guide_robot_localization': PYTHONPATH=/home/iwintern/guide_robot_ws/src/guide_robot_localization/build/guide_robot_localization/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base build/guide_robot_localization build --build-base /home/iwintern/guide_robot_ws/src/guide_robot_localization/build/guide_robot_localization/build install --record /home/iwintern/guide_robot_ws/src/guide_robot_localization/build/guide_robot_localization/install.log --single-version-externally-managed install_data
+[1.576s] running egg_info
+[1.576s] writing build/guide_robot_localization/guide_robot_localization.egg-info/PKG-INFO
+[1.577s] writing dependency_links to build/guide_robot_localization/guide_robot_localization.egg-info/dependency_links.txt
+[1.577s] writing entry points to build/guide_robot_localization/guide_robot_localization.egg-info/entry_points.txt
+[1.577s] writing requirements to build/guide_robot_localization/guide_robot_localization.egg-info/requires.txt
+[1.577s] writing top-level names to build/guide_robot_localization/guide_robot_localization.egg-info/top_level.txt
+[1.581s] reading manifest file 'build/guide_robot_localization/guide_robot_localization.egg-info/SOURCES.txt'
+[1.582s] writing manifest file 'build/guide_robot_localization/guide_robot_localization.egg-info/SOURCES.txt'
+[1.582s] running build
+[1.582s] running build_py
+[1.583s] running install
+[1.584s] running install_lib
+[1.586s] running install_data
+[1.587s] copying launch/mapping.launch.py -> /home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/share/guide_robot_localization/launch
+[1.587s] copying config/mapper_params_online_async.yaml -> /home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/share/guide_robot_localization/config
+[1.588s] running install_egg_info
+[1.591s] removing '/home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/lib/python3.10/site-packages/guide_robot_localization-0.0.0-py3.10.egg-info' (and everything under it)
+[1.591s] Copying build/guide_robot_localization/guide_robot_localization.egg-info to /home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/lib/python3.10/site-packages/guide_robot_localization-0.0.0-py3.10.egg-info
+[1.593s] running install_scripts
+[1.627s] Installing accumulator script to /home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/lib/guide_robot_localization
+[1.628s] Installing corrected_body_frame_publisher script to /home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/lib/guide_robot_localization
+[1.628s] Installing imu_to_basefootprint script to /home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/lib/guide_robot_localization
+[1.628s] Installing odometry_transformer script to /home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/lib/guide_robot_localization
+[1.628s] Installing point_cloud_transformer script to /home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/lib/guide_robot_localization
+[1.629s] writing list of installed files to '/home/iwintern/guide_robot_ws/src/guide_robot_localization/build/guide_robot_localization/install.log'
+[1.682s] Invoked command in '/home/iwintern/guide_robot_ws/src/guide_robot_localization' returned '0': PYTHONPATH=/home/iwintern/guide_robot_ws/src/guide_robot_localization/build/guide_robot_localization/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/iwintern/guide_robot_ws/src/guide_robot_localization/install/guide_robot_localization/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base build/guide_robot_localization build --build-base /home/iwintern/guide_robot_ws/src/guide_robot_localization/build/guide_robot_localization/build install --record /home/iwintern/guide_robot_ws/src/guide_robot_localization/build/guide_robot_localization/install.log --single-version-externally-managed install_data

@@ -26,12 +26,12 @@ def generate_launch_description():
     # --- NODES ---
 
     # 1. STATIC TRANSFORM (Base -> Lidar)
-    # Values: Backwards 0.2m, Up 0.5m, Yaw 180 (3.14), Pitch -60 (-1.047)
+    # Values: Forwards 0.1m, Up 0.4m, Yaw 180 (3.14), Pitch -60 (-1.047)
     tf_base_lidar = Node(
         package='tf2_ros',
         executable='static_transform_publisher',
         name='base_to_lidar_publisher',
-        arguments=['-0.2', '0.0', '0.5', '3.14159', '-1.047', '0.0', 'base_link', 'livox_frame']
+        arguments=['0.1', '0.0', '0.4', '3.14159', '-1.047', '0.0', 'base_link', 'livox_frame']
     )
 
     tf_odom_bridge = Node(
@@ -45,7 +45,7 @@ def generate_launch_description():
         package='tf2_ros',
         executable='static_transform_publisher',
         name='body_to_base_link',
-        arguments=['0','0','0','0','0','0', 'body', 'base_link']
+        arguments=['-0.1','0','-0.4','0','0','0', 'body', 'base_link']
     )
 
     # 2. FAST-LIO (Odometry Source)
@@ -77,7 +77,7 @@ def generate_launch_description():
             'angle_min': -3.14159,
             'angle_max': 3.14159,
             'angle_increment': 0.0043,
-            'scan_time': 0.1,
+            'scan_time': 0.33,
             'range_min': 0.2,
             'range_max': 50.0,
             'use_inf': True,
