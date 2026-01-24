@@ -28,10 +28,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'imu_to_basefootprint = guide_robot_localization.imu_to_basefootprint:main',
             'point_cloud_transformer = guide_robot_localization.point_cloud_transformer:main',
-            'odometry_transformer = guide_robot_localization.odometry_transformer:main',
-            'corrected_body_frame_publisher = guide_robot_localization.corrected_body_frame_publisher:main',
         ],
     },
 )
