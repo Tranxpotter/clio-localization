@@ -61,17 +61,17 @@ def generate_launch_description():
 
     # 2. TF GLUE
     # Connect ROS navigation frames to FAST-LIO's world frame
-    tf_odom_glue = Node(
+    tf_odom_camera = Node(
         package='tf2_ros', executable='static_transform_publisher',
         arguments=['0','0','0','0','0','0', odom_frame, camera_init_frame]
     )
     # Connect FAST-LIO's body frame to robot base footprint
-    tf_base_glue = Node(
+    tf_body_footprint = Node(
         package='tf2_ros', executable='static_transform_publisher',
         arguments=['0','0','-0.4','0','0','0', body_frame, base_footprint_frame]
     )
     # LiDAR mounting position transform
-    tf_base_lidar = Node(
+    tf_body_lidar = Node(
         package='tf2_ros', executable='static_transform_publisher',
         name='tf_base_lidar',
         arguments=lidar_tf_args
@@ -144,9 +144,9 @@ def generate_launch_description():
         declare_map_path, 
         declare_nav2_config_path, 
         fast_lio_launch,
-        tf_odom_glue,
-        tf_base_glue,
-        tf_base_lidar,
+        tf_body_footprint,
+        tf_odom_camera,
+        tf_body_lidar,
         rotate_pc_node,
         pc2scan_node,
         localization_launch,
