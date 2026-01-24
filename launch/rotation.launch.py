@@ -80,15 +80,6 @@ def generate_launch_description():
         }]
     )
 
-    # 4. ACCUMULATOR (The Sparsity Fix)
-    # Collects 10 frames (1.0s) of data to make lines solid
-    accumulator_node = Node(
-        package='guide_robot_localization',
-        executable='accumulator',
-        name='pointcloud_accumulator',
-        parameters=[{'accumulation_frames': 10}] 
-    )
-
     
 
     # 4. POINTCLOUD TO LASERSCAN
@@ -97,8 +88,7 @@ def generate_launch_description():
         executable='pointcloud_to_laserscan_node',
         name='pointcloud_to_laserscan',
         remappings=[
-            # LISTEN TO THE ACCUMULATOR NOT FAST-LIO
-            ('cloud_in', '/cloud_accumulated'), 
+            ('cloud_in', '/Laser_map'), 
             ('scan', '/scan')
         ],
         parameters=[{
@@ -147,7 +137,6 @@ def generate_launch_description():
         tf_base_glue,
         tf_base_lidar,
         corrected_body_frame_node,
-        accumulator_node,
         pc2scan_node,
         localization_launch,
         rviz_node

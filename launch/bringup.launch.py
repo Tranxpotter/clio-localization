@@ -61,14 +61,6 @@ def generate_launch_description():
         arguments=lidar_tf_args
     )
 
-    # 3. ACCUMULATOR (The Sparsity Fix)
-    # Collects 10 frames (1.0s) of data to make lines solid
-    accumulator_node = Node(
-        package='guide_robot_localization',
-        executable='accumulator',
-        name='pointcloud_accumulator',
-        parameters=[{'accumulation_frames': 10}] 
-    )
 
     # 4. ROTATE POINT CLOUD TO base_frame
     rotate_pc_node = Node(
@@ -76,11 +68,11 @@ def generate_launch_description():
         executable='point_cloud_transformer',
         name='pointcloud_rotator',
         remappings=[
-            ('/input_point_cloud', '/cloud_accumulated'),
+            ('/input_point_cloud', '/Laser_map'),
             ('/output_point_cloud', '/cloud_rotated')
         ],
         parameters=[{
-            'input_topic': '/cloud_accumulated',
+            'input_topic': '/Laser_map',
             'output_topic': '/cloud_rotated',
             'target_frame': lidar_frame,
             'timeout': 1.0
@@ -93,7 +85,6 @@ def generate_launch_description():
         executable='pointcloud_to_laserscan_node',
         name='pointcloud_to_laserscan',
         remappings=[
-            # LISTEN TO THE ACCUMULATOR NOT FAST-LIO
             ('cloud_in', '/cloud_rotated'), 
             ('scan', '/scan')
         ],
@@ -142,7 +133,6 @@ def generate_launch_description():
         tf_odom_glue,
         tf_base_glue,
         tf_base_lidar,
-        accumulator_node,
         rotate_pc_node,
         pc2scan_node,
         localization_launch,
