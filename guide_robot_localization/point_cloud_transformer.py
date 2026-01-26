@@ -1,5 +1,21 @@
+'''
+PointCloudTransformer Node
+This node publishes the incoming point cloud data to the targeted tf frame. 
+
+Parameters
+-----------
+input_topic: `str`
+    The lidar topic to listen to. Default: /Laser_map
+output_topic: `str`
+    The topic to publish the transformed point cloud to. Default: /transformed_point_cloud
+target_frame: `str`
+    The target tf frame for the transformed point cloud. Default: base_footprint
+verbose: `bool`
+    Log point cloud transformation
+'''
+
+
 from tf2_ros import TransformBroadcaster, Buffer, TransformListener
-from geometry_msgs.msg import TransformStamped
 from sensor_msgs.msg import PointCloud2
 from tf2_sensor_msgs.tf2_sensor_msgs import do_transform_cloud
 import rclpy
@@ -16,12 +32,12 @@ class PointCloudTransformer(Node):
         self.declare_parameter('input_topic', '/Laser_map')
         self.declare_parameter('output_topic', '/transformed_point_cloud')
         self.declare_parameter('target_frame', 'base_footprint')
-        self.declare_parameter('timeout', 1.0)  # seconds
+        self.declare_parameter('verbose', True)
     
-        self.input_topic = self.get_parameter('input_topic').value
-        self.output_topic = self.get_parameter('output_topic').value
-        self.target_frame = self.get_parameter('target_frame').value
-        self.timeout = self.get_parameter('timeout').value  # seconds
+        self.input_topic = self.get_parameter('input_topic').get_parameter_value().string_value
+        self.output_topic = self.get_parameter('output_topic').get_parameter_value().string_value
+        self.target_frame = self.get_parameter('target_frame').get_parameter_value().string_value
+        self.verbose = self.get_parameter('verbose').get_parameter_value().bool_value
     
         # TF Buffer and Listener with longer cache time
         self.tf_buffer = Buffer(cache_time=rclpy.duration.Duration(seconds=10.0))
@@ -47,8 +63,10 @@ class PointCloudTransformer(Node):
                 self.get_logger().warn(f'Transform from {msg.header.frame_id} to {self.target_frame} not available')
                 return
 
-            self.get_logger().info(f'Transforming point cloud from {msg.header.frame_id} to {self.target_frame}')
-            transformed_cloud = self.transform_cloud_manual(msg)
+            if self.verbose:
+                self.get_logger().info(f'Transforming point cloud from {msg.header.frame_id} to {self.target_frame}')
+            
+            transformed_cloud = self.construct_new_cloud(msg)
             if transformed_cloud is not None:
                 # Publish the transformed point cloud
                 self.publisher.publish(transformed_cloud)
@@ -56,85 +74,26 @@ class PointCloudTransformer(Node):
         except Exception as e:
             self.get_logger().error(f'Failed to transform point cloud: {str(e)}')
 
-    def transform_cloud_manual(self, msg):
-        """Manual transformation method with robust timing"""
-        try:
-            # Try to get transform with the exact timestamp first
-            try:
-                transform = self.tf_buffer.lookup_transform(
-                    self.target_frame,
-                    msg.header.frame_id,
-                    msg.header.stamp,
-                    rclpy.duration.Duration(seconds=self.timeout)
-                )
-            except Exception:
-                # Fallback: use the latest available transform
-                self.get_logger().warn('Using latest available transform instead of message timestamp')
-                transform = self.tf_buffer.lookup_transform(
-                    self.target_frame,
-                    msg.header.frame_id,
-                    rclpy.time.Time()  # Latest available
-                )
-            
-            # Read points from the message
-            points_list = list(point_cloud2.read_points(msg, field_names=("x", "y", "z"), skip_nans=True))
-            
-            if not points_list:
-                self.get_logger().warn('No valid points in point cloud')
-                return None
-            
-            # Transform each point with full 6-DOF transformation
-            transformed_points = []
-            
-            # Extract rotation quaternion
-            qx = transform.transform.rotation.x
-            qy = transform.transform.rotation.y
-            qz = transform.transform.rotation.z
-            qw = transform.transform.rotation.w
-            
-            # Convert quaternion to rotation matrix
-            rotation_matrix = self.quaternion_to_rotation_matrix(qx, qy, qz, qw)
-            # rotation_matrix = R  # Use hardcoded rotation for testing
-            rotation_matrix = np.array([
-                [1.0, 0.0, 0.0],
-                [0.0, 1.0, 0.0],
-                [0.0, 0.0, 1.0]
-            ])  # Use hardcoded rotation for testing
+    def construct_new_cloud(self, msg):
+        '''
+        Construct a new PointCloud2 from a PointCloud2 msg
+        
+        :param msg: The incoming lidar point cloud msg
+        '''
+        # Create new point cloud message
+        header = msg.header
+        header.frame_id = self.target_frame
+        header.stamp = self.get_clock().now().to_msg()  # Use current time
+        
+        # Get points and convert to list
+        points_list = list(point_cloud2.read_points(msg, field_names=("x", "y", "z"), skip_nans=True))
 
-            # Extract translation
-            tx = transform.transform.translation.x
-            ty = transform.transform.translation.y
-            tz = transform.transform.translation.z
-            
-            tx = 0.0  # Use hardcoded translation for testing
-            ty = 0.0
-            tz = 0.0
+        # Create the new point cloud
+        new_cloud = point_cloud2.create_cloud_xyz32(header, points_list)
+        
+        return new_cloud
 
-            for point in points_list:
-                # Apply rotation
-                point_vec = np.array([point[0], point[1], point[2]])
-                rotated_point = rotation_matrix @ point_vec
-                
-                # Apply translation
-                x = rotated_point[0] + tx
-                y = rotated_point[1] + ty
-                z = rotated_point[2] + tz
-                
-                transformed_points.append([x, y, z])
-            
-            # Create new point cloud message
-            header = msg.header
-            header.frame_id = self.target_frame
-            header.stamp = self.get_clock().now().to_msg()  # Use current time
-            
-            # Create the new point cloud
-            new_cloud = point_cloud2.create_cloud_xyz32(header, transformed_points)
-            
-            return new_cloud
-            
-        except Exception as e:
-            self.get_logger().error(f'Transform lookup failed: {str(e)}')
-            return None
+    
     
     def quaternion_to_rotation_matrix(self, qx, qy, qz, qw):
         """

@@ -33,7 +33,7 @@ def generate_launch_description():
     lidar_frame = 'lidar'
 
     # Lidar frame tilt transform calculation (60 pitch, 180 yaw) #TODO: what's the actual lidar frame angles?
-    pitch_angle_deg = 60.0
+    pitch_angle_deg = -60.0
     pitch_angle_rad = pitch_angle_deg * (math.pi / 180.0)
     yaw_angle_deg = 180.0
     yaw_angle_rad = yaw_angle_deg * (math.pi / 180.0)
@@ -92,7 +92,7 @@ def generate_launch_description():
             'input_topic': '/Laser_map',
             'output_topic': '/cloud_rotated',
             'target_frame': lidar_frame,
-            'timeout': 1.0
+            'verbose': False
         }]
     )
 
