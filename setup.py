@@ -29,6 +29,7 @@ setup(
     entry_points={
         'console_scripts': [
             'point_cloud_transformer = guide_robot_localization.point_cloud_transformer:main',
+            'goal_pose_remapper = guide_robot_localization.goal_pose_remapper:main'
         ],
     },
 )

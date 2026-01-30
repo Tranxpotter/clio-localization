@@ -4,6 +4,8 @@ This node reads nav2 goal pose topic and call FASTLIO2_ROS2 localizer topic
 
 Parameters
 -----------
+map_path: `str`
+    The path of the map to use (.pcd)
 verbose: `bool`
     Log what the node is doing
 '''
@@ -32,7 +34,6 @@ bool valid
 from tf2_ros import TransformBroadcaster, Buffer, TransformListener
 import rclpy
 from rclpy.node import Node
-import numpy as np
 import math
 from interface.srv import Relocalize, IsValid # Service of FASTLIO2_ROS2 /localizer/relocalize and /localizer/relocalize_check
 from geometry_msgs.msg import PoseStamped # This is the msg type of /goal_pose
@@ -42,12 +43,11 @@ class GoalPoseRemapper(Node):
         super().__init__('goal_pose_remapper')
         
         # Parameters
+        self.declare_parameter('map_path', 'maps/map.pcd')
         self.declare_parameter('verbose', True)
+        self.map_path = self.get_parameter('map_path').get_parameter_value().string_value
         self.verbose = self.get_parameter('verbose').get_parameter_value().bool_value
     
-
-
-
         # Subscriber
         self.subscription = self.create_subscription(
             PoseStamped,
@@ -57,9 +57,36 @@ class GoalPoseRemapper(Node):
         self.relocalize_client = self.create_client(Relocalize, "/localizer/relocalize")
         
 
-    def goal_pose_callback(self, msg):
-        ...
-            
+    def goal_pose_callback(self, msg:PoseStamped):
+        position = msg.pose.position
+        orientation = msg.pose.orientation
+
+        x, y, z = position.x, position.y, position.z
+        ox, oy, oz, ow = orientation.x, orientation.y, orientation.z, orientation.w
+
+        # Convert quaternion to roll, pitch, yaw
+        roll = math.atan2(2 * (ow * ox + oy * oz), 1 - 2 * (ox * ox + oy * oy))
+        pitch = math.asin(2 * (ow * oy - oz * ox))
+        yaw = math.atan2(2 * (ow * oz + ox * oy), 1 - 2 * (oy * oy + oz * oz))
+
+        request = Relocalize.Request()
+        request.pcd_path = self.map_path
+        request.x, request.y, request.z = x, y, z
+        request.yaw, request.pitch, request.roll = yaw, pitch, roll
+
+        future = self.relocalize_client.call_async(request)
+        if self.verbose:
+            self.get_logger().info(f"Sending relocalize request: {x=} {y=} {z=} {yaw=} {pitch=} {roll=}")
+        future.add_done_callback(self.on_relocalize_done)
+    
+    def on_relocalize_done(self, future):
+        try:
+            response = future.result()
+            if self.verbose:
+                self.get_logger().info(f"Relocalize response: success={response.success}, message={response.message}")
+        except Exception as e:
+            self.get_logger().error(f"Service call failed: {e}")
+        
 
 def main(args=None):
     rclpy.init(args=args)
