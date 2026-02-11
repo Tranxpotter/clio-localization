@@ -63,6 +63,9 @@ class StaticOdomPublisher(Node):
 def main(args=None):
     rclpy.init(args=args)
     static_odom_publisher = StaticOdomPublisher()
-    rclpy.spin(static_odom_publisher)
+    try:
+        rclpy.spin(static_odom_publisher)
+    except KeyboardInterrupt as e:
+        pass
     static_odom_publisher.destroy_node()
     rclpy.shutdown()
