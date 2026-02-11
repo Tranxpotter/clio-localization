@@ -1,6 +1,6 @@
 '''
-GoalPoseRemapper Node
-This node reads nav2 goal pose topic and call FASTLIO2_ROS2 localizer topic 
+PoseEstimateRemapper Node
+This node reads nav2 initial pose estimate topic and call FASTLIO2_ROS2 localizer topic 
 
 Parameters
 -----------
@@ -36,11 +36,11 @@ import rclpy
 from rclpy.node import Node
 import math
 from interface.srv import Relocalize, IsValid # Service of FASTLIO2_ROS2 /localizer/relocalize and /localizer/relocalize_check
-from geometry_msgs.msg import PoseStamped # This is the msg type of /goal_pose
+from geometry_msgs.msg import PoseWithCovarianceStamped # This is the msg type of /goal_pose
 
-class GoalPoseRemapper(Node):
+class PoseEstimateRemapper(Node):
     def __init__(self):
-        super().__init__('goal_pose_remapper')
+        super().__init__('pose_estimate_remapper')
         
         # Parameters
         self.declare_parameter('map_path', 'maps/map.pcd')
@@ -50,16 +50,16 @@ class GoalPoseRemapper(Node):
     
         # Subscriber
         self.subscription = self.create_subscription(
-            PoseStamped,
-            "/goal_pose",
+            PoseWithCovarianceStamped,
+            "/initialpose",
             self.goal_pose_callback,
             10)
         self.relocalize_client = self.create_client(Relocalize, "/localizer/relocalize")
         
 
-    def goal_pose_callback(self, msg:PoseStamped):
-        position = msg.pose.position
-        orientation = msg.pose.orientation
+    def goal_pose_callback(self, msg:PoseWithCovarianceStamped):
+        position = msg.pose.pose.position
+        orientation = msg.pose.pose.orientation
 
         x, y, z = position.x, position.y, position.z
         ox, oy, oz, ow = orientation.x, orientation.y, orientation.z, orientation.w
@@ -90,7 +90,7 @@ class GoalPoseRemapper(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    goal_pose_remapper = GoalPoseRemapper()
+    goal_pose_remapper = PoseEstimateRemapper()
     rclpy.spin(goal_pose_remapper)
     goal_pose_remapper.destroy_node()
     rclpy.shutdown()

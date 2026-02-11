@@ -29,7 +29,7 @@ setup(
     entry_points={
         'console_scripts': [
             'point_cloud_transformer = guide_robot_localization.point_cloud_transformer:main',
-            'goal_pose_remapper = guide_robot_localization.goal_pose_remapper:main', 
+            'pose_estimate_remapper = guide_robot_localization.pose_estimate_remapper:main', 
             'static_odom_publisher = guide_robot_localization.static_odom_publisher:main', 
             'pc_synced_static_odom_publisher = guide_robot_localization.pc_synced_static_odom_publisher:main', 
             'tf_height_remover = guide_robot_localization.tf_height_remover:main', 
