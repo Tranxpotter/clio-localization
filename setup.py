@@ -33,6 +33,7 @@ setup(
             'static_odom_publisher = guide_robot_localization.static_odom_publisher:main', 
             'pc_synced_static_odom_publisher = guide_robot_localization.pc_synced_static_odom_publisher:main', 
             'tf_height_remover = guide_robot_localization.tf_height_remover:main', 
+            'tf_densifier = guide_robot_localization.tf_densifier:main', 
         ],
     },
 )

@@ -10,6 +10,8 @@ parent_frame: `str`
     The parent frame for the odometry. Default: /map
 child_frame: `str`
     The child frame frame for the odometry. Default: /static_odom
+period: `float`
+    The timer period in sec to update the odometry. Default: 0.5
 verbose: `bool`
     Logging. Default: False
 '''
@@ -27,22 +29,24 @@ class StaticOdomPublisher(Node):
         self.declare_parameter('output_topic', '/static_odom')
         self.declare_parameter('parent_frame', '/map')
         self.declare_parameter('child_frame', '/static_odom')
+        self.declare_parameter("period", 0.5)
         self.declare_parameter('verbose', False)
     
         self.output_topic = self.get_parameter('output_topic').get_parameter_value().string_value
         self.parent_frame = self.get_parameter('parent_frame').get_parameter_value().string_value
         self.child_frame = self.get_parameter('child_frame').get_parameter_value().string_value
+        self.period = self.get_parameter('period').get_parameter_value().double_value
         self.verbose = self.get_parameter('verbose').get_parameter_value().bool_value
 
         # Subscriber and Publisher
         self.publisher = self.create_publisher(Odometry, self.output_topic, 10)
 
-        self.timer = self.create_timer(0.5, self.timer_callback) #TODO: timer frequency parameter
+        self.timer = self.create_timer(self.period, self.timer_callback)
 
     def timer_callback(self):
         odom_msg = Odometry()
         odom_msg.header.frame_id = self.parent_frame
-        odom_msg.header.stamp = self.get_clock().now().to_msg() #TODO: Sim time?
+        odom_msg.header.stamp = self.get_clock().now().to_msg()
         odom_msg.child_frame_id = self.child_frame
 
         odom_msg.pose.pose.position.x = 0.0

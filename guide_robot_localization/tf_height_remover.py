@@ -10,6 +10,8 @@ input_frame: `str`
     The tf frame to listen to. Default: body
 output_frame: `str`
     The name of the processed tf frame. Default: base_footprint
+z_extra_offset: `float`
+    Extra offset as buffer for not letting output tf < 0.0. Default: 0.0
 verbose: `bool`
     Log tf transformer
 '''
@@ -29,12 +31,17 @@ class TfHeightRemover(Node):
         self.declare_parameter('world_frame', 'map')
         self.declare_parameter('input_frame', 'body')
         self.declare_parameter('output_frame', 'base_footprint')
+        self.declare_parameter('z_extra_offset', 0.0)
         self.declare_parameter('verbose', True)
 
         self.world_frame = self.get_parameter('world_frame').get_parameter_value().string_value
         self.input_frame = self.get_parameter('input_frame').get_parameter_value().string_value
         self.output_frame = self.get_parameter('output_frame').get_parameter_value().string_value
+        self.z_extra_offset = self.get_parameter('z_extra_offset').get_parameter_value().double_value
         self.verbose = self.get_parameter('verbose').get_parameter_value().bool_value
+
+        if self.verbose:
+            self.get_logger().info(f"Loaded parameters: {self.world_frame=} {self.input_frame=} {self.output_frame=} {self.z_extra_offset=}")
     
         # TF Buffer and Listener with longer cache time
         self.tf_buffer = Buffer(cache_time=Duration(seconds=10))
@@ -70,7 +77,7 @@ class TfHeightRemover(Node):
 
         new_t.transform.translation.x = 0.0
         new_t.transform.translation.y = 0.0
-        new_t.transform.translation.z = -z
+        new_t.transform.translation.z = -z - self.z_extra_offset
         new_t.transform.rotation.w = 1.0
         new_t.transform.rotation.x = 0.0
         new_t.transform.rotation.y = 0.0
@@ -79,7 +86,7 @@ class TfHeightRemover(Node):
         self.tf_broadcaster.sendTransform(new_t)
 
         if self.verbose:
-            self.get_logger().info(f"Published transform from {self.input_frame} to {self.output_frame} with z={-z} sec={new_t.header.stamp.sec} nanosec={new_t.header.stamp.nanosec}")
+            self.get_logger().info(f"Published transform from {self.input_frame} to {self.output_frame} with z={new_t.transform.translation.z} sec={new_t.header.stamp.sec} nanosec={new_t.header.stamp.nanosec}")
 
             
 
